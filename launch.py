@@ -1,14 +1,4 @@
-<p style="text-align: center;">
-	<img src="https://raw.githubusercontent.com/sp3rtah/tickterial/master/tickterial.png" alt="cover" title="logo"/>
-<p>
-
-## Download and cache tick data(material) from Dukascopy Bank SA
-
-
-### NB: This is a module to be integrated with your code
-
-# Usage
-```python
+import struct
 import asyncio
 from tickterial import DataCenter
 from datetime import datetime
@@ -34,4 +24,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-```

@@ -1,0 +1,31 @@
+# pyproject.toml
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tickterial"
+version = "1.0.0"
+description = "Download and cache tick data(material) from Dukascopy Bank SA"
+readme = "README.md"
+authors = [{ name = "sp3rtah", email = "ngaira14nelson@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["forex", "forex-data", "streaming", "forex "]
+dependencies = [
+	"pytz==2022.7",
+	"aiohttp==3.8.3",
+	"loguru==0.6.0",
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["build", "twine"]
+
+[project.urls]
+Homepage = "https://github.com/sp3rtah/autogram"
