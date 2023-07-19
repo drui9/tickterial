@@ -1,3 +1,7 @@
-aiohttp==3.8.3
-loguru==0.6.0
-pytz==2022.7
+pytz
+flask
+pandas
+loguru
+requests
+flask-login
+flask-sqlalchemy

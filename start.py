@@ -1,27 +1,7 @@
-#!./venv/bin/python
-import struct
-import asyncio
-from tickterial import DataCenter
-from datetime import datetime
+from tickterial import create_app
 
-async def main():
-    ct = DataCenter(timeout=30, use_cache=True)
 
-    # download ticks for a single hour
-    ticks = await ct.get_ticks('GBPUSD',datetime(2023, 1, 12)) # 2022-06-14 21:00
-    out = struct.iter_unpack(ct.format,ticks.read())    # list of tuples
-    for tick in out:
-        print(tick)
-
-    # bulk download ticks: More efficient for range downloads
-    timerange = (datetime(2023, 1, 13),datetime(2023, 2, 14, 8))     # 2023-01-13 00:00  to 2023-02-14 8:00
-    generator = await ct.get_ticks_range('GBPUSD',timerange)
-
-    for hour, stream in generator:
-        print(f'Unpacking data for: {hour}')
-        out = struct.iter_unpack(ct.format,stream.read())
-        for tick in out:
-            print(tick)
+app = create_app()
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    app.run(debug=True, host='0.0.0.0', port=5050)
