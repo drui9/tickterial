@@ -1,8 +1,8 @@
 SRC := start.py
-TSRC := test.py
+TSRC := tests.py
 
 test: $(TSRC)
-	./$<
+	./venv/bin/python3 tests.py
 
 run: $(SRC)
 	./venv/bin/python3 $^
@@ -11,4 +11,5 @@ build:
 	./venv/bin/python3 -m build
 
 clean:
-	rm -rf dist *.egg-info **/__pycache__
+	rm -rf dist build *.egg-info **/__pycache__
+

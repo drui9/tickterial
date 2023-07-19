@@ -1,7 +1,6 @@
 pytz
 flask
-pandas
 loguru
 requests
-flask-login
 flask-sqlalchemy
+build

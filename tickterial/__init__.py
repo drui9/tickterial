@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 tickloader = Tickloader(db)
 
 # import routes
-from tickterial.routes import *
+from tickterial.routes import *  # noqa: E402, F403
 
 # create app instance
 def create_app():
