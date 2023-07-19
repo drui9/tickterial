@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tickterial"
-version = "1.0.0"
-description = "Download and cache tick data(material) from Dukascopy Bank SA"
+version = "1.0.1"
+description = "Download tick data from Dukascopy Bank SA to local cache with custom simulated price streams!"
 readme = "README.md"
 authors = [{ name = "sp3rtah", email = "ngaira14nelson@gmail.com" }]
 license = { file = "LICENSE" }
@@ -18,9 +18,11 @@ classifiers = [
 ]
 keywords = ["forex", "forex-data", "streaming", "forex "]
 dependencies = [
-	"pytz==2022.7",
-	"aiohttp==3.8.3",
-	"loguru==0.6.0",
+	'Flask==2.3.2',
+	'Flask-SQLAlchemy==3.0.5',
+	'loguru==0.6.0',
+	'pytz==2022.7',
+	'requests==2.31.0'
 ]
 requires-python = ">=3.10"
 

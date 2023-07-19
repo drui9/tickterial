@@ -39,9 +39,9 @@ class Tickloader():
 		_cache_path = f'{self.cache}/{symbol}'
 		if not os.path.exists(_cache_path):
 			os.mkdir(_cache_path)
-		return f'{_cache_path}/{symbol}_{str(hour).replace(" ","_")}'
+		return f'{_cache_path}/{symbol}_{str(hour.strftime("%Y-%m-%d %H")).replace(" ","_")}'
 
-	def format_time_range(self, timerange: Tuple[datetime,datetime]) -> List[datetime]:
+	def format_time_range(self, timerange: Tuple[datetime, datetime]) -> List[datetime]:
 		out = list()
 		_start, _end = timerange
 		# check type validity
@@ -59,8 +59,8 @@ class Tickloader():
 			_start += _step
 		return out
 
-	def download(self, symbol :str, timestamp :datetime, local_utc_hr_diff = 3):
-		timestamp = self.to_utc(timestamp, local_utc_hr_diff)
+	def download(self, symbol :str, day :datetime, local_utc_hr_diff = 3):
+		timestamp = self.to_utc(day, local_utc_hr_diff)
 		if not self.is_valid_time(timestamp):
 			self.logger.info(f'Skipping invalid time : {timestamp}UTC')
 			return None
@@ -77,7 +77,7 @@ class Tickloader():
 			url = self.endpoint.format(**params)
 			self.logger.debug(url)
 			try:
-				res = self.requests.get(url, timeout=10)
+				res = self.requests.get(url, timeout=13, allow_redirects=False)
 				if not res.ok:
 					self.logger.critical(f'Get {url} failed: {res.status_code}')
 				_data = res.content
@@ -85,10 +85,28 @@ class Tickloader():
 					return None
 				# save to cache
 				self.to_cache(_path, _data)
+			except requests.exceptions.ConnectionError:
+				self.logger.critical('Connection Error!')
 			except Exception as e:
 				self.logger.critical(str(e))
 				return None
-		return self.dec(_data)
+		# closure to format data
+		def format_data(data):
+			point = 1e5
+			if symbol.lower() in ['usdrub', 'xagusd', 'xauusd']:
+				point = 1e3
+			#
+			for data in struct.iter_unpack(self.data_format, data):
+				tm, askp, bidp, askv, bidv = data
+				yield {
+					'timestamp': (datetime(day.year, day.month, day.day) + timedelta(milliseconds=tm)).timestamp(),
+					'ask': askp / point,
+					'bid': bidp / point,
+					'ask-vol': round(askv * 1e6),
+					'bid-vol': round(bidv * 1e6)
+				}
+		# decode and format data
+		return format_data(self.dec(_data))
 
 	def to_cache(self, path :str, data :bytes) -> int:
 		with open(path,'wb') as out:

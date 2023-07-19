@@ -1,11 +1,12 @@
 SRC := start.py
 TSRC := test.py
 
-test: $(TSRC)
-	./$<
 
 run: $(SRC)
 	./venv/bin/python3 $^
+
+test: $(TSRC)
+	./$<
 
 build:
 	./venv/bin/python3 -m build
