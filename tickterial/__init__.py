@@ -4,7 +4,7 @@ from tickterial.tickloader import Tickloader
 
 # main application
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:' # todo: store db in cache
 
 # extensions
 db = SQLAlchemy(app)

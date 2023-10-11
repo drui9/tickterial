@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tickterial"
-version = "1.0.2"
+version = "1.0.3"
 description = "Download tick data from Dukascopy Bank SA to local cache with custom simulated price streams!"
 readme = "README.md"
 authors = [{ name = "sp3rtah", email = "ngaira14nelson@gmail.com" }]

@@ -5,7 +5,7 @@ import loguru
 import requests
 from typing import Tuple, List
 from datetime import datetime, timedelta
-from lzma import LZMADecompressor, LZMAError, FORMAT_AUTO
+from lzma import LZMADecompressor, LZMAError, FORMAT_AUTO # noqa: F401
 
 
 class Tickloader():
@@ -18,7 +18,7 @@ class Tickloader():
 	def __init__(self, db):
 		self.logger = loguru.logger
 		self.db = db
-		self.cache = '.tick-data'
+		self.cache = '.tick-data' # todo: relocate cache
 		self.data_format = '!3i2f'
 		# init requests' Session()
 		self.requests = requests.Session()
@@ -75,10 +75,10 @@ class Tickloader():
 			self.logger.info(f'Invalid time {symbol}[{hour.ctime()}, utc:{timestamp.ctime()}]')  # noqa: E501
 			return
 		# check if cached
-		self.logger.info(f'Preparing data: {symbol}[utc: {timestamp.ctime()}]')
+		self.logger.info(f'Preparing data: {symbol}[{hour.ctime()}]')
 		_path = self.get_cache_path((symbol, timestamp))
 		if not (_data := self.get_from_cache(_path)):
-			self.logger.info(f'Downloading data for {symbol}:{hour.ctime()}')
+			self.logger.info(f'Fetch {symbol}[{hour.ctime()} as {timestamp.ctime()}]')
 			params = {
 				'currency': symbol,
 				'year': timestamp.year,
@@ -129,6 +129,7 @@ class Tickloader():
 
 	def to_gmt(self, time :datetime, utcoffset :int=0) -> datetime:
 		"""Converts local time to GMT with respect to utc hour offset"""
+		"""Assumes gmt==utc"""
 		if not utcoffset:
 			return time
 		return time - timedelta(hours=utcoffset)
