@@ -2,13 +2,13 @@ SRC := start.py
 TSRC := tests.py
 
 test: $(TSRC)
-	./venv/bin/python3 tests.py
+	venv\Scripts\python tests.py
 
 run: $(SRC)
-	./venv/bin/python3 $^
+	venv\Scripts\python $^
 
 build:
-	./venv/bin/python3 -m build
+	venv\Scripts\python -m build
 
 clean:
 	rm -rf dist build *.egg-info **/__pycache__

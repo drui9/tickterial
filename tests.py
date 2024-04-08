@@ -23,7 +23,7 @@ def test_bulk_download():
 			print(f'{thetime} tick count: {len(ticks)}')
 
 def test_download():
-	period = datetime(hour=0, day=31,month=7, year=2023)
+	period = datetime(hour=17, day=8,month=4, year=2024)
 	data = tickloader.download('GBPUSD', period)
 	#
 	ticks = list()
