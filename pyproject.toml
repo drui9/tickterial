@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tickterial"
-version = "1.0.3"
+version = "1.1.0"
 description = "Download tick data from Dukascopy Bank SA to local cache with custom simulated price streams!"
 readme = "README.md"
-authors = [{ name = "sp3rtah", email = "ngaira14nelson@gmail.com" }]
+authors = [{ name = "drui9", email = "ngaira14nelson@gmail.com" }]
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -18,8 +18,6 @@ classifiers = [
 ]
 keywords = ["forex", "forex-data", "streaming", "forex "]
 dependencies = [
-	'Flask==2.3.2',
-	'Flask-SQLAlchemy==3.0.5',
 	'loguru==0.6.0',
 	'pytz==2022.7',
 	'requests==2.31.0'
@@ -30,7 +28,7 @@ requires-python = ">=3.10"
 dev = ["build", "twine"]
 
 [project.urls]
-Homepage = "https://github.com/sp3rtah/tickterial"
+Homepage = "https://github.com/drui9/tickterial"
 
 [project.scripts]
-ticker = "tickterial:main"
+tickterial = "tickterial.main:main"

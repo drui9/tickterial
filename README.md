@@ -42,17 +42,12 @@ print('--end--')
 `Coming soon...`
 
 ## TODO
-- Internally convert prices to float 																	- DONE
-- Add database caching for large offline histories
-- Add API functionality for use as a local tcp streaming service
-- Containerize the API through docker for ease of use
-- Stick around. There's more coming!
+- Internally convert prices to float	- DONE
+- Add database caching for large offline histories - DEPRECATED
+- Add API functionality for use as a local tcp streaming service - HIGHER LEVEL FEATURE
+- Add console functionality, saving history files in multiple formats including json and csv.
 
 ## Notes
 - Cache is store in UTC. Pass your UTC time difference as last parameter to `tickloader.download` to fix local time offset.
-- Tick data can only be fetch to the previous hour. Current hour returns 404. This is handled internally though
+- Tick data can only be fetched to the previous hour. Current hour returns 404. This is handled internally
 - Cache is stored in current working directory, path = `.tick-data`. Move this directory when migrating your server to save bandwidth and keep your cached data, or mount a local directory when using docker volumes.
-
-## `Please donate to keep development going`
-- My Public Address to Receive BTC: `bc1qg8tqa0azl7el38wtdfawxnj2tfz46ajtjnv685`
-- Via [Trust Wallet](https://link.trustwallet.com/send?coin=0&address=bc1qg8tqa0azl7el38wtdfawxnj2tfz46ajtjnv685)

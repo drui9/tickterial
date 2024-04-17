@@ -15,12 +15,11 @@ class Tickloader():
 		Gecko) Chrome/102.0.5005.61 Safari/537.36'
 	}
 
-	def __init__(self, db):
+	def __init__(self):
 		self.logger = loguru.logger
-		self.db = db
 		self.cache = '.tick-data' # todo: relocate cache
 		self.data_format = '!3i2f'
-		# init requests' Session()
+		# initialize requests' session
 		self.requests = requests.Session()
 		self.requests.headers.update(self.headers)
 		#
@@ -72,13 +71,13 @@ class Tickloader():
 		"""Downloads ticks for <hour>. utcoffset = utc - local (default= 3hours)"""
 		timestamp = self.to_gmt(hour, utcoffset)
 		if not self.is_valid_time(timestamp):
-			self.logger.info(f'Invalid time {symbol}[{hour.ctime()}, utc:{timestamp.ctime()}]')  # noqa: E501
+			self.logger.info(f'Invalid time {symbol}[{hour.strftime("%a")}: {hour.ctime()}, utc:{timestamp.ctime()}]')  # noqa: E501
 			return
 		# check if cached
 		self.logger.info(f'Preparing data: {symbol}[{hour.ctime()}]')
 		_path = self.get_cache_path((symbol, timestamp))
 		if not (_data := self.get_from_cache(_path)):
-			self.logger.info(f'Fetch {symbol}[{hour.ctime()} as {timestamp.ctime()}]')
+			self.logger.info(f'Fetch {symbol}[{hour.strftime("%a")}: {hour.ctime()} as {timestamp.ctime()}]')
 			params = {
 				'currency': symbol,
 				'year': timestamp.year,

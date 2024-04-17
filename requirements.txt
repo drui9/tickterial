@@ -1,6 +1,4 @@
 pytz
-flask
+build
 loguru
 requests
-flask-sqlalchemy
-build
