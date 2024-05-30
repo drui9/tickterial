@@ -1,14 +1,18 @@
-SRC := start.py
-TSRC := test.py
+env := .venv
+test_src := test.py
 
-test: $(TSRC)
-	./$<
+dl:
+	@.venv/bin/tickterial --symbols GBPUSD EURUSD USDJPY XAUUSD --start '2024-04-08 17:00:00' --end '2024-04-10 00:00:00' --progress False
 
-run: $(SRC)
-	./venv/bin/python3 $^
+test: $(test_src) $(env)
+	$(env)/bin/python $<
 
-build:
-	./venv/bin/python3 -m build
+install: $(env)
+	$</bin/pip install -e .
+
+$(env):
+	python -m venv $@
 
 clean:
-	rm -rf dist *.egg-info **/__pycache__
+	rm -rf dist build *.egg-info **/__pycache__
+

@@ -1,21 +1,21 @@
-#!./venv/bin/python
-import requests
-from datetime import datetime, timedelta
-from tickterial import tickloader
+from datetime import datetime
+from tickterial import Tickloader
 
-def stream():
-	with requests.Session() as session:
-		headers = {'Content-Type': 'text/event-stream'}
-		res = session.get('http://localhost:5050', headers=headers)
-		if res.ok:
-			for data in res.iter_lines():
-				print(data.decode('utf8'))
 
-def download():
-	period = datetime(year=2023, month=7, day=10, hour=19)
+def test_download():
+	tickloader = Tickloader()
+	period = datetime(hour=17, day=8,month=4, year=2024)
+	print(period.ctime())
+	#
+	ticks = list()
+	if data := tickloader.download('GBPUSD', period):
+		for tick in data:
+			ticks.append(tick)
+		if ticks:
+			print(f'{period} tick count: {len(ticks)}')
+			print(ticks[0])
+		else:
+			print('No data!')
 
-	data = tickloader.download('GBPUSD', period)
-	# print(data)
-
-download()
+test_download()
 print('--end--')

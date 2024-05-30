@@ -6,26 +6,33 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tickterial"
-version = "1.0.0"
-description = "Download and cache tick data(material) from Dukascopy Bank SA"
+version = "1.1.1"
+description = "Download tick data from Dukascopy Bank SA to local cache, and simulate multi-symbol time-ordered price streams to stdout."
 readme = "README.md"
-authors = [{ name = "sp3rtah", email = "ngaira14nelson@gmail.com" }]
+authors = [{ name = "drui9", email = "drui9@duck.com" }]
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
 ]
-keywords = ["forex", "forex-data", "streaming", "forex "]
+keywords = ["tick-data", "forex-data", "tick-api", "ticks"]
 dependencies = [
-	"pytz==2022.7",
-	"aiohttp==3.8.3",
-	"loguru==0.6.0",
+	'loguru==0.6.0',
+	'pytz==2022.7',
+	'requests==2.32.2',
+    'alive-progress>=3.1.5'
 ]
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
-dev = ["build", "twine"]
+dev = [
+    "build",
+    "twine"
+]
 
 [project.urls]
-Homepage = "https://github.com/sp3rtah/autogram"
+Homepage = "https://github.com/drui9/tickterial"
+
+[project.scripts]
+tickterial = "tickterial.main:main"
