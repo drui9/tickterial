@@ -5,8 +5,15 @@
 ## tickterial: forex & cfd tick data
 Download and cache tick data from Dukascopy Bank SA.
 
-Example multi-symbol stream output:
+## Installation ::Python3
+```
+pip install tickterial
+```
+
+Example multi-symbol stream download:
 ```monospace
+$ tickterial --symbols GBPUSD EURUSD USDJPY XAUUSD --start '2024-04-08 17:00:00' --end '2024-04-10 00:00:00' --progress true
+
 timestamp, symbol, ask-price, bid-price, ask-volume, bid-volume
 ...
 1712696398.152,GBPUSD,1.26785,1.26774,900000,900000
@@ -15,7 +22,7 @@ timestamp, symbol, ask-price, bid-price, ask-volume, bid-volume
 1712696398.343,USDJPY,1.51808,1.51755,1800000,1800000
 ...
 ```
-- Easy, normalized prices, multi-currency, simultaneous and ordered prices output!
+- Easy, normalized prices, multi-currency, simultaneous and ordered price output!
 
 ## Why the name? <tickterial>
 I thought of tick material as a replacement for tick-data, which has been used way too many times already, both in research and code.
@@ -26,11 +33,6 @@ Currency pairs(tested) and more(untested) instruments on [this page](https://www
 Note that this code respects their API rate-limits. As such, asyncronous frameworks like aiohttp largely returned errors, before I settled for a syncronous.
 A work-around is to use a list of proxies for each individual request (planned).
 
-## Installation ::Python3
-```
-pip install tickterial
-```
-
 ## Usage
 Two modes are supported.
 - As a commandline program with arguments (python's argparse is beautiful!)
@@ -38,23 +40,26 @@ Two modes are supported.
 
 ### Usage example 1: `Module usage`
 ```python
-from datetime import datetime, timedelta
-from tickterial import tickloader
+from datetime import datetime
+from tickterial import Tickloader
 
-def download():
-	period = datetime.now() - timedelta(minutes=60) # previous hour
-	data = tickloader.download('GBPUSD', period)
+
+def test_download():
+	tickloader = Tickloader()
+	period = datetime(hour=17, day=8,month=4, year=2024)
+	print(period.ctime())
 	#
-	count = 4
-	for index, tick in enumerate(data):
-		print(tick)
-		#
-		count -= 1
-		if not count:
-			print(f'--showing first {index + 1} ticks--')
-			break
+	ticks = list()
+	if data := tickloader.download('GBPUSD', period):
+		for tick in data:
+			ticks.append(tick)
+		if ticks:
+			print(f'{period} tick count: {len(ticks)}')
+			print(ticks[0])
+		else:
+			print('No data!')
 
-download()
+test_download()
 print('--end--')
 
 #output:
@@ -96,5 +101,6 @@ I couldn't pay for my college. I therefore learn on my own to create amazing sof
 - Contact me for requests, optimizations, pull-requests and every other interesting topic.
 
 ```monospace
-with love:
-	@drui9```
+for the spirit of opensource:
+	#drui9```
+

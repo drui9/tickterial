@@ -12,9 +12,10 @@ class Ticker:
         self.symbols = list(set(args.symbols))
         self.start = datetime.fromisoformat(args.start)
         self.end = datetime.fromisoformat(args.end) if args.end else self.start
-        self.progress = args.progress
+        self.disable_progress = True if args.progress == 'false' else False
+        self.header = True if args.header == 'true' else False
+        self.print = True if args.print == 'true' else False
         self.cachedir = args.cachedir
-        self.header = args.header
         # todo: specify log-file
         logger.disable('tickterial')
         # --
@@ -52,7 +53,7 @@ class Ticker:
                     'ticks': list()
                 })
         # download ticks
-        with alive_bar(len(self.symbols) * len(times), title='Tick download', disable=self.progress) as bar:
+        with alive_bar(len(self.symbols) * len(times), title='Tick download', disable=self.disable_progress) as bar:
             for symbol, tf in self.downloads['data'].items():
                 for data in tf:
                     try:
@@ -68,6 +69,8 @@ class Ticker:
         self.downloads['go'].wait()
         if self.terminate.is_set():
             return
+        if not self.print:
+            return self.terminate.set()
         # -- init tick stack
         symbols = list(self.downloads['data'].keys())
         time_index = 0
@@ -99,24 +102,28 @@ class Ticker:
         out = list()
         init = True
         order = sorted(ticks)
-        for i in order:
-            if init:
-                header = ['timestamp']
-                df = ticks[i][-1].keys() if isinstance(ticks[i], list) else ticks[i].keys()
-                header.extend(list(df))
-                init = False
-                print(','.join(header))
-            # print ticks
-            if isinstance(ticks[i], list):
-                for tk in ticks[i]:
-                    for _, v in ({'ts': i}|tk).items():
+        try:
+            for i in order:
+                if init and self.header:
+                    header = ['timestamp']
+                    df = ticks[i][-1].keys() if isinstance(ticks[i], list) else ticks[i].keys()
+                    header.extend(list(df))
+                    init = False
+                    print(','.join(header))
+                # print ticks
+                if isinstance(ticks[i], list):
+                    for tk in ticks[i]:
+                        for _, v in ({'ts': i}|tk).items():
+                            out.append(str(v))
+                else:
+                    for _, v in ({'ts': i}|ticks[i]).items():
                         out.append(str(v))
-            else:
-                for _, v in ({'ts': i}|ticks[i]).items():
-                    out.append(str(v))
-            print(','.join(out))
-            out.clear()
-        self.terminate.set()
+                print(','.join(out))
+                out.clear()
+        except Exception:
+            pass
+        finally:
+            self.terminate.set()
 
     def shutdown(self, *_):
         self.terminate.set()
