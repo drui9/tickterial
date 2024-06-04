@@ -1,4 +1,0 @@
-loguru>=0.6.0
-pytz>=2022.7
-requests>=2.32.2
-alive-progress>=3.1.5

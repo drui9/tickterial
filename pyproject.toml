@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tickterial"
-version = "1.1.1"
+version = "1.1.2"
 description = "Download tick data from Dukascopy Bank SA to local cache, and simulate multi-symbol time-ordered price streams to stdout."
 readme = "README.md"
 authors = [{ name = "drui9", email = "drui9@duck.com" }]
@@ -18,7 +18,7 @@ classifiers = [
 ]
 keywords = ["tick-data", "forex-data", "tick-api", "ticks"]
 dependencies = [
-	'loguru==0.6.0',
+	'loguru==0.7.2',
 	'pytz==2022.7',
 	'requests==2.32.2',
     'alive-progress>=3.1.5'
