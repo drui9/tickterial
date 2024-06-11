@@ -18,9 +18,9 @@ classifiers = [
 ]
 keywords = ["tick-data", "forex-data", "tick-api", "ticks"]
 dependencies = [
-	'loguru==0.7.2',
-	'pytz==2022.7',
-	'requests==2.32.2',
+	'loguru>=0.7.2',
+	'pytz>=2022.7',
+	'requests>=2.32.2',
     'alive-progress>=3.1.5'
 ]
 requires-python = ">=3.10"
