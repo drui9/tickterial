@@ -71,21 +71,16 @@ print('--end--')
 - For multi-symbol downloads, the streams are ordered by timestamp(wow!). You can stream ordered prices for say EURUSD, GBPUSD etc. (Currently, only supported for commandline invokation.)
 - Keeping track of the number of `,` should allow easy partitioning of the ticks for `backtesting systems`. - Voila! My next project.
 
-## Support the project
-I couldn't afford college. I therefore learn through the web and create amazing software that can impact this world in ways I can. A little help will offload my bills and give me more working time.
-- You can paypal at me: `ngaira14nelson@gmail.com`
-- Contact me for requests, optimizations, pull-requests and every other interesting topic.
-
+## Support the developer
+Bitcoin:
+```monospace
+bc1qg8tqa0azl7el38wtdfawxnj2tfz46ajtjnv685
+```
 
 ## TODO
-- Add support for streaming ordered-ticks to TCP endpoint - planned
-- Support for pandas dataframes and numpy arrays - differred
-- Integrate mplfinance for candlestick plotting - differred
-- Use proxies to perform async downloads - planned
-- Parse ticks to generate timeframe data - differred
+- Add support for streaming ordered-ticks to TCP endpoint
+- Support for pandas dataframes and numpy arrays
+- Integrate mplfinance for candlestick plotting
+- Use proxies to perform async downloads
+- Parse ticks to generate timeframe data
 - Port to faster languages (C/Rust/GO) - differred
-
-```monospace
-In the spirit of opensource:
-	# dev.drui9
-```
